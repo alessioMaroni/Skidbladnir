@@ -1,0 +1,55 @@
+[alias]
+b = "build"
+bj = "build -j 3"
+c = "check"
+cl = "clean"
+t = "test"
+r = "run"
+rr = "run --release"
+recursive_example = "rr --example recursions"
+
+[build]
+warnings = "deny"
+jobs = 1
+rustc = "rustc"
+rustc-wrapper = "sccache"
+rustdoc = "rustdoc"
+rustdocflags = ["--deny-warnings"]
+incremental = false
+rustflags = [
+    "-D", "warnings",
+    "-C", "panic=abort",
+    "-C", "overflow-checks=on",
+    "-C", "force-unwind-tables=no",
+]
+
+[unstable]
+build-std = [
+    "core", "alloc"
+]
+
+[target.x86_64-unknown-uefi]
+rustflags = [
+    "-C", "link-arg=/ENTRY:efi_main",
+    "-C", "link-arg=/SUBSYSTEM:EFI_APPLICATION",
+]
+
+[target.x86_64-unknown-none] 
+rustflags = [
+    "-C", "link-arg=-Tx86_64-linker.ld",
+    "-C", "code-model=kernel",
+    "-C", "relocation-model=static",
+    "-C", "target-feature=-sse,-sse2,-avx,-avx2",
+]
+
+[profile.dev]
+panic = "abort"
+overflow-checks = true
+debug-assertions = true
+
+[profile.release]
+panic = "abort"
+overflow-checks = true
+lto = "fat"
+codegen-units = 1
+strip = "debuginfo"
