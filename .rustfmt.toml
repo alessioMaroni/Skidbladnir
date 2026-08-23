@@ -1,0 +1,11 @@
+edition = "2024"
+newline_style = "Unix"
+hard_tabs = true
+tab_spaces = 4
+max_width = 100
+reorder_imports = true
+reorder_modules = true
+
+# Uncomment the options below once they become stable on the stable channel
+# wrap_comments = true
+# comment_width = 80

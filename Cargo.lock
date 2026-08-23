@@ -3,9 +3,9 @@
 version = 4
 
 [[package]]
-name = "skidbladnir-kernel"
+name = "skidbladnir-bootloader"
 version = "0.1.0"
 
 [[package]]
-name = "skidbladnir-bootloader"
+name = "skidbladnir-kernel"
 version = "0.1.0"
