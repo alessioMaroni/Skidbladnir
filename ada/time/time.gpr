@@ -4,7 +4,7 @@ project Skidbladnir_Core is
    for Object_Dir use "obj";
    for Library_Dir use "lib";
 
-   for Library_Name use "skidbladnir_core";
+   for Library_Name use "time";
    for Library_Kind use "static";
 
    -- Configurazione Bare Metal

@@ -29,6 +29,7 @@ description = " "
 readme = "README.md"
 
 [dependencies]
+log = "0.4.34"
 
 [features]
 
