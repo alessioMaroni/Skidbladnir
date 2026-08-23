@@ -1,0 +1,5 @@
+pragma No_Run_Time;
+pragma Restrictions (No_Exception_Propagation);
+pragma Restrictions (No_Allocators);
+pragma Restrictions (No_Implicit_Heap_Allocations);
+pragma Restrictions (No_Tasking);

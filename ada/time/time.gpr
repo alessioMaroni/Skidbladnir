@@ -1,0 +1,23 @@
+project Skidbladnir_Core is
+   for Languages use ("Ada");
+   for Source_Dirs use ("src");
+   for Object_Dir use "obj";
+   for Library_Dir use "lib";
+
+   for Library_Name use "skidbladnir_core";
+   for Library_Kind use "static";
+
+   -- Configurazione Bare Metal
+   for Target use "x86_64-elf";
+   for Runtime ("Ada") use "zfp"; 
+
+   package Compiler is
+      for Default_Switches ("Ada") use (
+         "-O2",
+         "-gnat2022",
+         "-fno-stack-protector",
+         "-ffunction-sections",
+         "-fdata-sections"
+      );
+   end Compiler;
+end Skidbladnir_Core;

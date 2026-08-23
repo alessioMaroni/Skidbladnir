@@ -1,0 +1,10 @@
+name = "time"
+description = "a high precision timer library for the Skidbladnir kernel"
+version = "0.1.0-dev"
+
+authors = ["Alessio Maroni"]
+maintainers = ["Alessio Maroni <alessioMaroni0@gmail.com>"]
+maintainers-logins = ["alessioMaroni"]
+licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
+website = ""
+tags = []
