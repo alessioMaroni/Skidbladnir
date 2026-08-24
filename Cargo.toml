@@ -1,7 +1,6 @@
 [workspace]
 resolver = "2"
 members = [
-    "skidbladnir-bootloader"
 ]
 
 exclude = [
@@ -16,7 +15,6 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/alessioMaroni/skidbladnir"
 
 [workspace.dependencies]
-uefi = "0.39.0"
 
 [package]
 name = "skidbladnir-kernel"
@@ -29,7 +27,7 @@ description = " "
 readme = "README.md"
 
 [dependencies]
-log = "0.4.34"
+uefi = "0.39.0"
 
 [features]
 
