@@ -1,8 +1,10 @@
+with Interfaces.C; use Interfaces.C;
+
 package body Time is
 
-   procedure Sum_Integer (A : Integer; B : Integer; Risultato : out Integer) is
+   function Sum_Integer (A : int; B : int) return int is
    begin
-      Risultato := A + B;
+      return A + B;
    end Sum_Integer;
 
 end Time;

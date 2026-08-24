@@ -35,6 +35,11 @@ pub use skidbladnir_kernel::{
     FrameRange,
 };
 
+#[cfg(target_arch = "x86_64")]
+unsafe extern "sysv64" {
+    pub fn ada_sum_integer(a: i32, b: i32) -> i32;
+}
+
 #[cfg(target_os = "uefi")]
 #[uefi::prelude::entry]
 fn efi_main() -> uefi::Status {
@@ -51,8 +56,9 @@ pub fn kernel_main(_boot_info: &BootInfo) -> ! {
 
     let mut my_vec: Vec<String> = Vec::new();
     my_vec.push(String::from("Hello"));
-    
+
     loop {
-        core::hint::spin_loop();
+
     }
+    
 }

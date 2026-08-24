@@ -27,6 +27,7 @@ description = " "
 readme = "README.md"
 
 [dependencies]
+log = "0.4.34"
 spin = "0.12.3"
 uefi = "0.39.0"
 

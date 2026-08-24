@@ -104,6 +104,14 @@ pub fn boot_uefi() -> BootInfo {
     boot::stall(core::time::Duration::from_secs(1));
     uefi::println!("Exiting Boot Services...");
 
+    /*
+    unsafe {
+        let risultato_ada: i32 = crate::ada_sum_integer(25, 25);
+        uefi::println!("--- Ada Integration Test ---");
+        uefi::println!("    Risultato somma Ada (25 + 25): {}", risultato_ada);
+    }
+    */
+
     // Phase 4: Terminate Boot Services.
     // SAFETY: After this call, UEFI-provided resources are no longer accessible.
     let _final_memory_map = unsafe { 

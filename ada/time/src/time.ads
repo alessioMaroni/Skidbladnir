@@ -1,9 +1,11 @@
+with Interfaces.C; use Interfaces.C;
+
 package Time is
+   pragma Pure (Time);
 
-    procedure Sum_Integer
-        with Export         => True,
-            Convention      => C,
-            External_Name   => "ada_sum_integer";
-
+   function Sum_Integer (A : int; B : int) return int
+     with Export        => True,
+          Convention    => C,
+          External_Name => "ada_sum_integer";
 
 end Time;
