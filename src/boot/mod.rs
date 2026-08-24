@@ -6,5 +6,5 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[cfg(target_arch = "x86_64")]
-pub mod  uefi_boot;
+#[cfg(target_os = "uefi")]
+pub mod uefi_boot;
