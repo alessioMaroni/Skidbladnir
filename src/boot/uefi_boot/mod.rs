@@ -13,11 +13,15 @@
 //! UEFI Boot Services.
 
 pub mod fbi;
+pub mod fr;
 
 use crate::BootInfo;
 use self::fbi::get_framebuffer_info;
+use self::fr::get_frame_range;
+
 use uefi::boot::{self, MemoryType};
-use uefi::mem::memory_map::MemoryMap;
+
+pub const KERNEL_ENTRY: usize = 0x00200000;
 
 /// Initializes the hardware environment via UEFI and performs the transition to bare-metal Ring 0.
 ///
@@ -50,32 +54,7 @@ pub fn boot_uefi() -> BootInfo {
     uefi::helpers::init().unwrap();
     uefi::println!("Welcome to Skidbladnir Kernel!");
 
-    // Phase 2: Retrieve the firmware memory map for physical RAM discovery.
-    let memory_map = boot::memory_map(MemoryType::LOADER_DATA)
-        .expect("Fatal error: failed to retrieve UEFI memory map");
-
-    let mut min_phys_addr = u64::MAX;
-    let mut max_phys_addr = 0u64;
-    let mut total_conventional_bytes = 0u64;
-
-    // Iteratively scan descriptors provided by the firmware.
-    for entry in memory_map.entries() {
-        let start = entry.phys_start;
-        let end = start + (entry.page_count * 4096);
-
-        // Identify the lower physical memory boundary.
-        if start < min_phys_addr {
-            min_phys_addr = start;
-        }
-
-        // Compute usable RAM (MemoryType::CONVENTIONAL) and upper physical limit.
-        if entry.ty == MemoryType::CONVENTIONAL {
-            if end > max_phys_addr {
-                max_phys_addr = end;
-            }
-            total_conventional_bytes += entry.page_count * 4096;
-        }
-    }
+    let fr = get_frame_range().expect("fatal error: Frame Range initialization failed");
 
     // Phase 3: Initialize display device via GOP (Graphics Output Protocol).
     let fbi = get_framebuffer_info().expect("Fatal error: GOP Framebuffer initialization failed");
@@ -84,33 +63,32 @@ pub fn boot_uefi() -> BootInfo {
     let boot_info = BootInfo {
         kernel_file_size: 0,
         kernel_size_ram: 0,
-        fr: crate::FrameRange {
-            ram_start: min_phys_addr,
-            ram_end: max_phys_addr,
-            total_conventional_bytes,
-            heap_start: 0,
-            heap_end: max_phys_addr,
-        },
+        fr,
         fbi,
     };
 
     // Diagnostic log to UEFI console prior to shutting down boot services.
-    uefi::println!("--- FrameBufferInfo ---");
-    uefi::println!("    base_address: {:#x}", boot_info.fbi.base_address);
-    uefi::println!("    width: {}", boot_info.fbi.width);
-    uefi::println!("    height: {}", boot_info.fbi.height);
+    uefi::println!("=== SKIDBLADNIR BOOT INFO ===");
+    uefi::println!("Kernel File Size: {} bytes", boot_info.kernel_file_size);
+    uefi::println!("Kernel RAM Size:  {} bytes", boot_info.kernel_size_ram);
+    
+    uefi::println!("\n--- Frame Range ---");
+    uefi::println!("RAM Start:                {:#018x}", boot_info.fr.ram_start);
+    uefi::println!("RAM End:                  {:#018x}", boot_info.fr.ram_end);
+    uefi::println!("Total Conventional Bytes: {} MB", boot_info.fr.total_conventional_bytes / (1024 * 1024));
+    uefi::println!("Heap Start:               {:#018x}", boot_info.fr.heap_start);
+    uefi::println!("Heap End:                 {:#018x}", boot_info.fr.heap_end);
+
+    uefi::println!("\n--- Frame Buffer Info ---");
+    uefi::println!("Base Address: {:#018x}", boot_info.fbi.base_address);
+    uefi::println!("Buffer Size:  {} bytes", boot_info.fbi.buffer_size);
+    uefi::println!("Resolution:   {}x{}", boot_info.fbi.width, boot_info.fbi.height);
+    uefi::println!("Stride:       {} pixels", boot_info.fbi.stride);
+    uefi::println!("=============================");
 
     // Stall to allow serial/console output buffer flush.
     boot::stall(core::time::Duration::from_secs(1));
     uefi::println!("Exiting Boot Services...");
-
-    /*
-    unsafe {
-        let risultato_ada: i32 = crate::ada_sum_integer(25, 25);
-        uefi::println!("--- Ada Integration Test ---");
-        uefi::println!("    Risultato somma Ada (25 + 25): {}", risultato_ada);
-    }
-    */
 
     // Phase 4: Terminate Boot Services.
     // SAFETY: After this call, UEFI-provided resources are no longer accessible.

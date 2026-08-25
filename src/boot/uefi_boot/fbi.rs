@@ -6,6 +6,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+//! This file contain the logic to extract Frame Buffer Info data
+
 use uefi::proto::console::gop::GraphicsOutput;
 
 /// Queries the UEFI Graphics Output Protocol (GOP) to retrieve the active
