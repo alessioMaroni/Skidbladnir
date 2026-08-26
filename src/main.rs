@@ -23,11 +23,14 @@ mod boot;
 mod arch;
 mod mm {
     pub mod buddy{
-        pub mod definition;
+        pub mod definitions;
+        pub mod buddy_impl;
+        pub mod global_impl;
+        pub mod loked_buddy_impl;
     }
 }
 
-use mm::buddy::definition::ALLOCATOR;
+use mm::buddy::global_impl::ALLOCATOR;
 
 pub use skidbladnir_kernel::{
     BootInfo,

@@ -18,33 +18,9 @@
 //! - **Deallocation (`dealloc`):** Calculates the buddy address using an XOR operation on the offset and,
 //!   if the buddy is free, recursively merges (*coalesces*) the two blocks into a higher-order block.
 
-use core::alloc::{GlobalAlloc, Layout};
+use crate::mm::buddy::definitions::{BuddyAllocator, FreeNode, PAGE_SIZE, MAX_ORDER};
+
 use core::ptr::null_mut;
-
-/// Maximum number of orders (levels) managed by the allocator ($0 \dots \text{MAX\_ORDER}-1$).
-///
-/// With `MAX_ORDER = 11`, the maximum order is 10, corresponding to $2^{10} = 1024$ pages ($4\text{ MiB}$).
-pub const MAX_ORDER: usize = 11;
-
-/// Standard memory page size on x86_64 architecture ($4096\text{ bytes}$).
-pub const PAGE_SIZE: usize = 4096;
-
-/// An intrusive node stored directly inside free memory blocks.
-///
-/// Forms a singly linked list for each order inside `free_lists`.
-#[repr(C)]
-pub struct FreeNode {
-    /// Pointer to the next free node in the list.
-    pub next: *mut FreeNode,
-}
-
-/// Main Buddy Allocator structure (non thread-safe).
-pub struct BuddyAllocator {
-    /// Array of linked lists of free blocks for each order.
-    free_lists: [*mut FreeNode; MAX_ORDER],
-    /// Starting memory address (physical or virtual) of the heap.
-    base_addr: u64,
-}
 
 impl BuddyAllocator {
     /// Creates an uninitialized allocator instance.
@@ -164,47 +140,3 @@ impl BuddyAllocator {
         false
     }
 }
-
-/// Thread-safe wrapper for `BuddyAllocator` protected by a spinlock.
-pub struct LockedBuddyAllocator(spin::Mutex<BuddyAllocator>);
-
-impl LockedBuddyAllocator {
-    /// Creates an uninitialized thread-safe allocator instance at compile time.
-    pub const fn new() -> Self {
-        Self(spin::Mutex::new(BuddyAllocator::new()))
-    }
-
-    /// Initializes the protected allocator by acquiring the spinlock.
-    pub fn init(&self, boot_info: &crate::BootInfo) {
-        self.0.lock().init(boot_info);
-    }
-}
-
-unsafe impl GlobalAlloc for LockedBuddyAllocator {
-    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-        let size = layout.size().max(layout.align());
-        let pages = (size + PAGE_SIZE - 1) / PAGE_SIZE;
-        let order = pages.next_power_of_two().trailing_zeros() as usize;
-
-        self.0.lock().alloc(order).unwrap_or(null_mut())
-    }
-
-    unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
-        let size = layout.size().max(layout.align());
-        let pages = (size + PAGE_SIZE - 1) / PAGE_SIZE;
-        let order = pages.next_power_of_two().trailing_zeros() as usize;
-
-        unsafe {
-            self.0.lock().dealloc(ptr, order);
-        }
-    }
-}
-
-// Concurrency guarantees: mutable access is synchronized by Mutex
-unsafe impl Send for BuddyAllocator {}
-unsafe impl Send for LockedBuddyAllocator {}
-unsafe impl Sync for LockedBuddyAllocator {}
-
-/// Global kernel allocator instance for `alloc` data structures (`Box`, `Vec`, etc.).
-#[global_allocator]
-pub static ALLOCATOR: LockedBuddyAllocator = LockedBuddyAllocator::new();
