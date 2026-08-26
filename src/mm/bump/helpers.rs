@@ -8,6 +8,8 @@
 
 //! Bump Allocator helper functions
 
+// TODO: Add Helper Functions to clean the ram and to reset the 'next' pointer
+
 /// Helper function to align an address upwards to the nearest multiple of `align`.
 ///
 /// `align` must be a power of two (e.g., 4, 8, 16, 4096).
