@@ -38,7 +38,3 @@ unsafe impl GlobalAlloc for LockedBuddyAllocator {
 unsafe impl Send for BuddyAllocator {}
 unsafe impl Send for LockedBuddyAllocator {}
 unsafe impl Sync for LockedBuddyAllocator {}
-
-/// Global kernel allocator instance for `alloc` data structures (`Box`, `Vec`, etc.).
-#[global_allocator]
-pub static ALLOCATOR: LockedBuddyAllocator = LockedBuddyAllocator::new();

@@ -21,16 +21,9 @@ use alloc::string::String;
 mod panic;
 mod boot;
 mod arch;
-mod mm {
-    pub mod buddy{
-        pub mod definitions;
-        pub mod buddy_impl;
-        pub mod global_impl;
-        pub mod loked_buddy_impl;
-    }
-}
+mod mm;
 
-use mm::buddy::global_impl::ALLOCATOR;
+use mm::ALLOCATOR;
 
 pub use skidbladnir_kernel::{
     BootInfo,
