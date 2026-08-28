@@ -12,11 +12,11 @@
 //! memory topology, configures the graphic framebuffer, and permanently disables
 //! UEFI Boot Services.
 
-pub mod fbi;
+pub mod fb;
 pub mod fr;
 
 use crate::BootInfo;
-use self::fbi::get_framebuffer_info;
+use self::fb::get_framebuffer_info;
 use self::fr::get_frame_range;
 
 use uefi::boot::{self, MemoryType};
@@ -57,14 +57,14 @@ pub fn boot_uefi() -> BootInfo {
     let fr = get_frame_range().expect("fatal error: Frame Range initialization failed");
 
     // Phase 3: Initialize display device via GOP (Graphics Output Protocol).
-    let fbi = get_framebuffer_info().expect("Fatal error: GOP Framebuffer initialization failed");
+    let fb = get_framebuffer_info().expect("Fatal error: GOP Framebuffer initialization failed");
 
     // Construct boot metadata payload for the kernel.
     let boot_info = BootInfo {
         kernel_file_size: 0,
         kernel_size_ram: 0,
         fr,
-        fbi,
+        fb,
     };
 
     // Diagnostic log to UEFI console prior to shutting down boot services.
@@ -80,10 +80,10 @@ pub fn boot_uefi() -> BootInfo {
     uefi::println!("Heap End:                 {:#018x}", boot_info.fr.heap_end);
 
     uefi::println!("\n--- Frame Buffer Info ---");
-    uefi::println!("Base Address: {:#018x}", boot_info.fbi.base_address);
-    uefi::println!("Buffer Size:  {} bytes", boot_info.fbi.buffer_size);
-    uefi::println!("Resolution:   {}x{}", boot_info.fbi.width, boot_info.fbi.height);
-    uefi::println!("Stride:       {} pixels", boot_info.fbi.stride);
+    uefi::println!("Base Address: {:#018x}", boot_info.fb.base_address);
+    uefi::println!("Buffer Size:  {} bytes", boot_info.fb.buffer_size);
+    uefi::println!("Resolution:   {}x{}", boot_info.fb.width, boot_info.fb.height);
+    uefi::println!("Stride:       {} pixels", boot_info.fb.stride);
     uefi::println!("=============================");
 
     // Stall to allow serial/console output buffer flush.

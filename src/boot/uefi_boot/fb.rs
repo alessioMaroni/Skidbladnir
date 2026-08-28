@@ -14,7 +14,7 @@ use uefi::proto::console::gop::GraphicsOutput;
 /// graphical framebuffer details and configuration.
 ///
 /// # Returns
-/// * `Ok(FrameBufferInfo)` containing the physical base address, size, dimensions,
+/// * `Ok(FrameBuffer)` containing the physical base address, size, dimensions,
 ///   and stride of the current display mode.
 /// * `Err(uefi::Status)` if the GOP protocol handle cannot be found, opened,
 ///   or if querying the mode/framebuffer fails.
@@ -23,7 +23,7 @@ use uefi::proto::console::gop::GraphicsOutput;
 /// This function will return an error if:
 /// * The system does not support or expose the UEFI `GraphicsOutput` protocol.
 /// * Opening the protocol exclusively fails due to firmware state or locking.
-pub fn get_framebuffer_info() -> Result<crate::FrameBufferInfo, uefi::Status> {
+pub fn get_framebuffer_info() -> Result<crate::FrameBuffer, uefi::Status> {
 	let gop_handle =
 		uefi::boot::get_handle_for_protocol::<GraphicsOutput>().map_err(|e| e.status())?;
 
@@ -33,7 +33,7 @@ pub fn get_framebuffer_info() -> Result<crate::FrameBufferInfo, uefi::Status> {
 	let mode_info = gop.current_mode_info();
 	let mut fb = gop.frame_buffer();
 
-	Ok(crate::FrameBufferInfo {
+	Ok(crate::FrameBuffer {
 		base_address: fb.as_mut_ptr() as u64,
 		buffer_size: fb.size() as u64,
 		width: mode_info.resolution().0 as u32,
