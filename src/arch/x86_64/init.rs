@@ -5,9 +5,8 @@
 // <LICENSE-MIT or https://opensource.org/licenses/MIT>, at your
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
-//
-//
-// This file olds the principals init function to setup the x86_64 envirorment
+
+//! This file olds the principals init function to setup the x86_64 envirorment
 
 /// Initializes the x86_64 environment for the Yggdrasil Kernel.
 ///
