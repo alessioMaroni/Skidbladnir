@@ -22,6 +22,7 @@ mod panic;
 mod boot;
 mod arch;
 mod mm;
+mod drivers;
 
 use mm::ALLOCATOR;
 
@@ -52,6 +53,8 @@ pub fn kernel_main(_boot_info: &BootInfo) -> ! {
 
     let mut my_vec: Vec<String> = Vec::new();
     my_vec.push(String::from("Hello"));
+
+    crate::drivers::video::set_pixel::set_pixel(300, 300, 0x00_00_FF, &_boot_info.fbi);
 
     loop {
 
