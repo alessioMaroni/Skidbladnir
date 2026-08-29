@@ -1,7 +1,4 @@
-# The Skidbladnir Kernel Project
-
-> *Named after the legendary Norse ship that could adapt to any voyage, navigate any weather, and fold up when not in use.*
-
+# The Skidbladnir Kernel Projec
 ## What is Skidbladnir?
 
 **Skidbladnir** is an ultra-resilient, bare-metal kernel written in **Rust** with **Ada/SPARK** integration. It is engineered for total operational adaptability across any deployment scenario:

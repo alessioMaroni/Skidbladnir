@@ -171,7 +171,6 @@ fn efi_main() -> uefi::Status {
 	#[cfg(target_arch = "x86_64")]
 	let mut boot_info = crate::boot::uefi_boot::boot_uefi();
 
-	// Passiamo un riferimento mutabile a boot_info
 	kernel_main(&mut boot_info);
 }
 
@@ -186,10 +185,10 @@ pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
 
 	*crate::io::output::WRITER.lock() = Some(console);
 
-	println!("ciao");
-
 	let mut my_vec: Vec<String> = Vec::new();
 	my_vec.push(String::from("Hello from Vector"));
+
+	println!("{:?}", my_vec);
 
 	loop {}
 }
