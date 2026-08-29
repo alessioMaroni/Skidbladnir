@@ -9,9 +9,9 @@
 //! Bare Metal Buddy Allocator
 //! Struct and constant values definition
 
+pub mod global_impl;
 pub mod implementation;
 pub mod loked_buddy_impl;
-pub mod global_impl;
 
 /// Maximum number of orders (levels) managed by the allocator ($0 \dots \text{MAX\_ORDER}-1$).
 ///

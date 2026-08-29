@@ -72,7 +72,6 @@ Ada and SPARK manage high-assurance arithmetic, precise timing constraints, and 
 | :--- | :--- | :--- | :--- |
 | **x86_64** | **Active Development** | `x86_64-unknown-none` | Server nodes, tactical laptops, QEMU bare-metal |
 | **AArch64 (ARM64)** | **Planned** | `aarch64-unknown-none` | Raspberry Pi, embedded drone controllers, SoC units |
-| **RISC-V (RV64)** | **Research** | `riscv64gc-unknown-none-elf` | Open-hardware microcontrollers, radiation-hardened chips |
 
 ---
 
