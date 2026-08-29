@@ -38,9 +38,9 @@ use crate::io::output::fonts::bitmap::FONT_ALPHABET;
 ///
 /// Wraps around the inner [`Fonts`] structure to expose typography settings 
 /// to the main console and display drivers.
-pub struct ActualFont<'a> {
+pub struct ActualFont {
     /// The underlying font management and rendering structure.
-    pub font: Fonts<'a>,
+    pub font: Fonts,
 }
 
 /// Defines the supported typography variants available within the kernel.
@@ -57,15 +57,15 @@ pub enum FontVariant {
 ///
 /// The `Fonts` structure acts as the primary controller for mapping characters 
 /// to visual pixels via an associated [`FrameBuffer`].
-pub struct Fonts<'a> {
+pub struct Fonts {
     /// The currently active font engine and data variant.
     pub variant: FontVariant,
 
     /// The target framebuffer reference used for low-level pixel manipulation.
-    pub fb: &'a mut FrameBuffer,
+    pub fb: FrameBuffer,
 }
 
-impl<'a> Fonts<'a> {
+impl Fonts {
     /// Initializes and returns a new [`Fonts`] instance based on user configuration.
     ///
     /// # Arguments
@@ -87,7 +87,7 @@ impl<'a> Fonts<'a> {
     /// let fb = FrameBuffer::new();
     /// let font_manager = Fonts::init(true, fb);
     /// ```
-    pub fn init(use_bitmap: bool, fb: &'a mut FrameBuffer) -> Self {
+    pub fn init(use_bitmap: bool, fb: FrameBuffer) -> Self {
         let variant = if use_bitmap {
             // Select the standard bitmap font variant
             FontVariant::Bitmap(FONT_ALPHABET)

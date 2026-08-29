@@ -31,7 +31,7 @@ use crate::drivers::video::colors::COLOR_WHITE;
 ///
 /// Manages screen text placement, cursor tracking, and delegates rendering 
 /// tasks down to the typography and font subsystems.
-impl<'a> Console<'a> {
+impl Console {
     /// Initializes and returns a new [`Console`] instance.
     ///
     /// # Arguments
@@ -53,7 +53,7 @@ impl<'a> Console<'a> {
     /// // let font = Fonts::init(true, fb);
     /// // let console = Console::init(actual_font, font);
     /// ```
-    pub fn init(font: Fonts<'a>) -> Self {
+    pub fn init(font: Fonts) -> Self {
         Console {
             pos_x: 20,
             pos_y: 20,

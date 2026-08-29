@@ -29,7 +29,7 @@ use mm::ALLOCATOR;
 /// to draw pixels, text, and graphics directly to the screen before a full
 /// GPU driver is initialized.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub  struct FrameBuffer {
 	/// The physical or virtual base memory address of the linear framebuffer.
 	///
@@ -181,11 +181,14 @@ pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
 
     ALLOCATOR.init(_boot_info);
 
-    let font_manager = Fonts::init(true, &mut _boot_info.fb);
+    let font_manager = Fonts::init(true, _boot_info.fb);
 
-    let mut console = Console::init(font_manager);
+    let console = Console::init(font_manager);
 
-    console.print_str("Hello, Skidbladnir Kernel!");
+	
+	*crate::io::output::WRITER.lock() = Some(console);
+
+    println!("ciao");
 
     let mut my_vec: Vec<String> = Vec::new();
     my_vec.push(String::from("Hello from Vector"));
