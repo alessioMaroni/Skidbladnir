@@ -2,7 +2,7 @@
 
 * [**Buddy Allocator**](./../src/mm/buddy)
 
-Skidbladnir uses the buddy allocator as the sole `#[global_allocator]` for the kernel. There is currently no overlying layer for small allocations.
+Yggdrasil uses the buddy allocator as the sole `#[global_allocator]` for the kernel. There is currently no overlying layer for small allocations.
 
 ## Why It Works For Now
 * **Minimum page size (4096 bytes)**: This works well as long as the kernel primarily allocates large structures (such as `Vec` and I/O buffers).

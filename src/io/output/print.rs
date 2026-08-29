@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Skidbladnir Kernel Project
+// Copyright (c) 2026 Yggdrasil Kernel Project
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -20,7 +20,7 @@
 //!
 //! // Assuming actual_font and font instances are initialized:
 //! // let mut console = Console::init(actual_font, font);
-//! // console.print_str("Hello, Skidbladnir Kernel!");
+//! // console.print_str("Hello, Yggdrasil Kernel!");
 //! ```
 
 use crate::drivers::video::colors::COLOR_WHITE;
@@ -106,7 +106,7 @@ impl Console {
 	///
 	/// ```rust
 	/// // Print a welcome banner string to the console
-	/// // console.print_str("Welcome to Skidbladnir OS!");
+	/// // console.print_str("Welcome to Yggdrasil OS!");
 	/// ```
 	pub fn print_str(&mut self, str: &str) {
 		for char in str.chars() {

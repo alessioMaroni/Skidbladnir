@@ -11,10 +11,10 @@ build-ada:
 
 build-x86_64: build-ada
 	RUSTFLAGS="-L native=$(CURDIR)/ada/time/lib -l static=ada_time" \
-		cargo +nightly build --package skidbladnir-kernel --target $(TARGET_UEFI)
+		cargo +nightly build --package Yggdrasil-kernel --target $(TARGET_UEFI)
 	rm -rf target/esp
 	mkdir -p target/esp/EFI/BOOT
-	cp target/$(TARGET_UEFI)/debug/skidbladnir-kernel.efi target/esp/EFI/BOOT/BOOTX64.EFI
+	cp target/$(TARGET_UEFI)/debug/Yggdrasil-kernel.efi target/esp/EFI/BOOT/BOOTX64.EFI
 
 run-x86_64: build-x86_64
 	qemu-system-x86_64 \

@@ -10,14 +10,14 @@ exclude = [
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
-authors = ["The skidbladnir Kernel Project"]
+authors = ["The Yggdrasil Kernel Project"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/alessioMaroni/skidbladnir"
+repository = "https://github.com/alessioMaroni/Yggdrasil"
 
 [workspace.dependencies]
 
 [package]
-name = "skidbladnir-kernel"
+name = "Yggdrasil-kernel"
 version = "0.1.0"
 authors.workspace = true
 license.workspace = true

@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Skidbladnir Kernel Project
+// Copyright (c) 2026 Yggdrasil Kernel Project
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -9,7 +9,7 @@
 //! # Bare-Metal Buddy Allocator
 //!
 //! This module implements a **Buddy Allocator** for dynamic heap memory management
-//! in the *Skidbladnir* kernel.
+//! in the *Yggdrasil* kernel.
 //!
 //! ## Algorithm
 //! The allocator divides memory into blocks with sizes equal to powers of two ($2^k \times \text{PAGE\_SIZE}$).
