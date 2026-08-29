@@ -42,7 +42,7 @@ use crate::drivers::video::colors::COLOR_BLACK;
 /// set_pixel(pos_x, pos_y, color, frame_buffer);
 /// ```
 #[inline(always)]
-pub fn set_pixel(x: u32, y: u32, color: u32, fb: &FrameBuffer) {
+fn set_pixel(x: u32, y: u32, color: u32, fb: &FrameBuffer) {
 	if x > fb.width || y > fb.height {
 		return;
 	}
@@ -72,15 +72,13 @@ pub fn set_pixel(x: u32, y: u32, color: u32, fb: &FrameBuffer) {
 ///
 /// clear_pixel(pos_x, pos_y, frame_buffer);
 /// ```
-pub fn clear_pixel(x: u32, y: u32, fb: &FrameBuffer) {
+fn clear_pixel(x: u32, y: u32, fb: &FrameBuffer) {
 	set_pixel(x, y, COLOR_BLACK, fb);
 }
 
 /// FrameBuffer implementation of:
 /// - `set_pixel`
 /// - `clear_pixel`
-///
-/// TODO: Consider to make this functions private
 ///
 /// # Example in the main
 /// ```rust
@@ -115,9 +113,6 @@ pub fn clear_pixel(x: u32, y: u32, fb: &FrameBuffer) {
 /// ```
 impl crate::FrameBuffer {
 	// Use &self as &FrameBuffer
-	//
-	// TODO: Consider adding an initialization function
-
 	pub fn set_pixel(&self, x: u32, y: u32, color: u32) {
 		set_pixel(x, y, color, self);
 	}

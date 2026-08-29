@@ -175,7 +175,6 @@ fn efi_main() -> uefi::Status {
 }
 
 pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
-	arch::x86_64::init::init_x86_64();
 
 	ALLOCATOR.init(_boot_info);
 
