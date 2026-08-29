@@ -9,8 +9,6 @@
 #![cfg(not(test))]
 #[panic_handler]
 pub fn panic(info: &core::panic::PanicInfo) -> ! {
-    crate::println!("[Kernel Panics] Panic: {:?}", info);
-    loop {
-
-    }
+	crate::println!("[Kernel Panics] Panic: {:?}", info);
+	loop {}
 }

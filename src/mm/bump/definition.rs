@@ -22,14 +22,14 @@ use core::cell::UnsafeCell;
 /// references (`&self`). Operations must be synchronized externally if accessed from
 /// multiple CPU cores or execution threads.
 pub struct BumpAllocator {
-    /// The current memory address boundary for the next allocation request.
-    ///
-    /// Moves forward (bumped) as allocations occur toward `heap_end`.
-    pub next: UnsafeCell<usize>,
+	/// The current memory address boundary for the next allocation request.
+	///
+	/// Moves forward (bumped) as allocations occur toward `heap_end`.
+	pub next: UnsafeCell<usize>,
 
-    /// The base starting physical/virtual address of the heap memory range.
-    pub heap_start: UnsafeCell<usize>,
+	/// The base starting physical/virtual address of the heap memory range.
+	pub heap_start: UnsafeCell<usize>,
 
-    /// The maximum allowable physical/virtual address limit of the heap memory range.
-    pub heap_end: UnsafeCell<usize>,
+	/// The maximum allowable physical/virtual address limit of the heap memory range.
+	pub heap_end: UnsafeCell<usize>,
 }

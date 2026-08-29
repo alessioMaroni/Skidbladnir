@@ -15,5 +15,5 @@
 /// `align` must be a power of two (e.g., 4, 8, 16, 4096).
 #[inline]
 pub fn align_up(addr: usize, align: usize) -> usize {
-    (addr + align - 1) & !(align - 1)
+	(addr + align - 1) & !(align - 1)
 }

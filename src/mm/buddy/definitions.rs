@@ -22,16 +22,16 @@ pub const PAGE_SIZE: usize = 4096;
 /// Forms a singly linked list for each order inside `free_lists`.
 #[repr(C)]
 pub struct FreeNode {
-    /// Pointer to the next free node in the list.
-    pub next: *mut FreeNode,
+	/// Pointer to the next free node in the list.
+	pub next: *mut FreeNode,
 }
 
 /// Main Buddy Allocator structure (non thread-safe).
 pub struct BuddyAllocator {
-    /// Array of linked lists of free blocks for each order.
-    pub free_lists: [*mut FreeNode; MAX_ORDER],
-    /// Starting memory address (physical or virtual) of the heap.
-    pub base_addr: u64,
+	/// Array of linked lists of free blocks for each order.
+	pub free_lists: [*mut FreeNode; MAX_ORDER],
+	/// Starting memory address (physical or virtual) of the heap.
+	pub base_addr: u64,
 }
 
 /// Thread-safe wrapper for `BuddyAllocator` protected by a spinlock.

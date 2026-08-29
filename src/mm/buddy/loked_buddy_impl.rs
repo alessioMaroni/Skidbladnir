@@ -8,16 +8,16 @@
 
 //! Loked Buddy Allocator Implementation
 
-use crate::mm::buddy::definitions::{LockedBuddyAllocator,BuddyAllocator};
+use crate::mm::buddy::definitions::{BuddyAllocator, LockedBuddyAllocator};
 
 impl LockedBuddyAllocator {
-    /// Creates an uninitialized thread-safe allocator instance at compile time.
-    pub const fn new() -> Self {
-        Self(spin::Mutex::new(BuddyAllocator::new()))
-    }
+	/// Creates an uninitialized thread-safe allocator instance at compile time.
+	pub const fn new() -> Self {
+		Self(spin::Mutex::new(BuddyAllocator::new()))
+	}
 
-    /// Initializes the protected allocator by acquiring the spinlock.
-    pub fn init(&self, boot_info: &crate::BootInfo) {
-        self.0.lock().init(boot_info);
-    }
+	/// Initializes the protected allocator by acquiring the spinlock.
+	pub fn init(&self, boot_info: &crate::BootInfo) {
+		self.0.lock().init(boot_info);
+	}
 }

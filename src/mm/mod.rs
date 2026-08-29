@@ -4,13 +4,13 @@
 //! allocator for general kernel dynamics and a lightweight bump allocator for early boot stages.
 
 pub mod buddy {
-    pub mod loked_buddy_impl;
-    pub mod global_impl;
-    pub mod definitions;
-    pub mod buddy_impl;
+	pub mod buddy_impl;
+	pub mod definitions;
+	pub mod global_impl;
+	pub mod loked_buddy_impl;
 }
 
- /// Example Usage of the Early Bump Allocator:
+/// Example Usage of the Early Bump Allocator:
 /// ```rust
 /// // Direct manual allocation via BumpAllocator raw interface
 /// let layout = core::alloc::Layout::from_size_align(1024, 8).unwrap();
@@ -21,10 +21,10 @@ pub mod buddy {
 /// }
 /// ```
 pub mod bump {
-    pub mod definition;
-    pub mod implementation;
-    pub mod helpers;
-    pub mod global_impl;
+	pub mod definition;
+	pub mod global_impl;
+	pub mod helpers;
+	pub mod implementation;
 }
 
 use crate::mm::buddy::definitions::LockedBuddyAllocator;

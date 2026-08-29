@@ -8,30 +8,30 @@
 
 //! Contai the Global Implentation of the Buddy Allocator
 
-use crate::mm::buddy::definitions::{BuddyAllocator, PAGE_SIZE};
 use crate::mm::buddy::definitions::LockedBuddyAllocator;
+use crate::mm::buddy::definitions::{BuddyAllocator, PAGE_SIZE};
 
 use core::alloc::{GlobalAlloc, Layout};
 use core::ptr::null_mut;
 
 unsafe impl GlobalAlloc for LockedBuddyAllocator {
-    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-        let size = layout.size().max(layout.align());
-        let pages = (size + PAGE_SIZE - 1) / PAGE_SIZE;
-        let order = pages.next_power_of_two().trailing_zeros() as usize;
+	unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+		let size = layout.size().max(layout.align());
+		let pages = (size + PAGE_SIZE - 1) / PAGE_SIZE;
+		let order = pages.next_power_of_two().trailing_zeros() as usize;
 
-        self.0.lock().alloc(order).unwrap_or(null_mut())
-    }
+		self.0.lock().alloc(order).unwrap_or(null_mut())
+	}
 
-    unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
-        let size = layout.size().max(layout.align());
-        let pages = (size + PAGE_SIZE - 1) / PAGE_SIZE;
-        let order = pages.next_power_of_two().trailing_zeros() as usize;
+	unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
+		let size = layout.size().max(layout.align());
+		let pages = (size + PAGE_SIZE - 1) / PAGE_SIZE;
+		let order = pages.next_power_of_two().trailing_zeros() as usize;
 
-        unsafe {
-            self.0.lock().dealloc(ptr, order);
-        }
-    }
+		unsafe {
+			self.0.lock().dealloc(ptr, order);
+		}
+	}
 }
 
 // Concurrency guarantees: mutable access is synchronized by Mutex

@@ -12,13 +12,12 @@
 #![feature(asm_experimental_arch)]
 #![allow(dead_code)]
 
-
-mod panic;
-mod boot;
 mod arch;
-mod mm;
+mod boot;
 mod drivers;
 mod io;
+mod mm;
+mod panic;
 
 use mm::ALLOCATOR;
 
@@ -30,7 +29,7 @@ use mm::ALLOCATOR;
 /// GPU driver is initialized.
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
-pub  struct FrameBuffer {
+pub struct FrameBuffer {
 	/// The physical or virtual base memory address of the linear framebuffer.
 	///
 	/// **Calculation:** Retrieved directly from the UEFI GOP mode info structure
@@ -154,45 +153,43 @@ pub struct BootInfo {
 
 extern crate alloc;
 #[allow(unused_imports)]
-use alloc::vec::Vec;
-#[allow(unused_imports)]
 use alloc::string::String;
+#[allow(unused_imports)]
+use alloc::vec::Vec;
 
-use crate::io::output::fonts::{Fonts};
 use crate::io::output::Console;
+use crate::io::output::fonts::Fonts;
 
 #[cfg(target_arch = "x86_64")]
 unsafe extern "sysv64" {
-    pub fn ada_sum_integer(a: i32, b: i32) -> i32;
+	pub fn ada_sum_integer(a: i32, b: i32) -> i32;
 }
 
 #[cfg(target_os = "uefi")]
 #[uefi::prelude::entry]
 fn efi_main() -> uefi::Status {
-    #[cfg(target_arch = "x86_64")]
-    let mut boot_info = crate::boot::uefi_boot::boot_uefi();
+	#[cfg(target_arch = "x86_64")]
+	let mut boot_info = crate::boot::uefi_boot::boot_uefi();
 
-    // Passiamo un riferimento mutabile a boot_info
-    kernel_main(&mut boot_info);
+	// Passiamo un riferimento mutabile a boot_info
+	kernel_main(&mut boot_info);
 }
 
 pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
-    arch::x86_64::init::init_x86_64();
+	arch::x86_64::init::init_x86_64();
 
-    ALLOCATOR.init(_boot_info);
+	ALLOCATOR.init(_boot_info);
 
-    let font_manager = Fonts::init(true, _boot_info.fb);
+	let font_manager = Fonts::init(true, _boot_info.fb);
 
-    let console = Console::init(font_manager);
+	let console = Console::init(font_manager);
 
-	
 	*crate::io::output::WRITER.lock() = Some(console);
 
-    println!("ciao");
+	println!("ciao");
 
-    let mut my_vec: Vec<String> = Vec::new();
-    my_vec.push(String::from("Hello from Vector"));
+	let mut my_vec: Vec<String> = Vec::new();
+	my_vec.push(String::from("Hello from Vector"));
 
-    loop {
-    }
+	loop {}
 }
