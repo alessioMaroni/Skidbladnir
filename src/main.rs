@@ -12,17 +12,13 @@
 #![feature(asm_experimental_arch)]
 #![allow(dead_code)]
 
-extern crate alloc;
-#[allow(unused_imports)]
-use alloc::vec::Vec;
-#[allow(unused_imports)]
-use alloc::string::String;
 
 mod panic;
 mod boot;
 mod arch;
 mod mm;
 mod drivers;
+mod io;
 
 use mm::ALLOCATOR;
 
@@ -156,6 +152,14 @@ pub struct BootInfo {
 	pub fb: FrameBuffer,
 }
 
+extern crate alloc;
+#[allow(unused_imports)]
+use alloc::vec::Vec;
+#[allow(unused_imports)]
+use alloc::string::String;
+
+use crate::io::output::fonts::{Fonts};
+use crate::io::output::Console;
 
 #[cfg(target_arch = "x86_64")]
 unsafe extern "sysv64" {
@@ -166,23 +170,26 @@ unsafe extern "sysv64" {
 #[uefi::prelude::entry]
 fn efi_main() -> uefi::Status {
     #[cfg(target_arch = "x86_64")]
-    let boot_info = crate::boot::uefi_boot::boot_uefi();
+    let mut boot_info = crate::boot::uefi_boot::boot_uefi();
 
-    kernel_main(&boot_info);
+    // Passiamo un riferimento mutabile a boot_info
+    kernel_main(&mut boot_info);
 }
 
-pub fn kernel_main(_boot_info: &BootInfo) -> ! {
+pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
     arch::x86_64::init::init_x86_64();
 
     ALLOCATOR.init(_boot_info);
 
+    let font_manager = Fonts::init(true, &mut _boot_info.fb);
+
+    let mut console = Console::init(font_manager);
+
+    console.print_str("Hello, Skidbladnir Kernel!");
+
     let mut my_vec: Vec<String> = Vec::new();
-    my_vec.push(String::from("Hello"));
+    my_vec.push(String::from("Hello from Vector"));
 
-    _boot_info.fb.set_pixel(200, 200, 0xFF_FF_FF);
-    
     loop {
-
     }
-    
 }

@@ -7,6 +7,9 @@
 // except according to those terms.
 
 //! Bitmaps characters used to output
+//!```rust
+//! use crate::io::output::fonts::bitmap;
+//! ```
 
 pub const FONT_ALPHABET: [[u8; 8]; 26] = [
     // A
