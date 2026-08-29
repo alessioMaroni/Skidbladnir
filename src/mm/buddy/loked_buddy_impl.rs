@@ -8,7 +8,7 @@
 
 //! Loked Buddy Allocator Implementation
 
-use crate::mm::buddy::definitions::{BuddyAllocator, LockedBuddyAllocator};
+use crate::mm::buddy::{BuddyAllocator, LockedBuddyAllocator};
 
 impl LockedBuddyAllocator {
 	/// Creates an uninitialized thread-safe allocator instance at compile time.

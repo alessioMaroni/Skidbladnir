@@ -13,7 +13,7 @@ use core::alloc::Layout;
 use core::cell::UnsafeCell;
 use core::ptr::null_mut;
 
-use crate::mm::bump::definition::BumpAllocator;
+use crate::mm::bump::BumpAllocator;
 use crate::mm::bump::helpers::align_up;
 
 impl BumpAllocator {

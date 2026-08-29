@@ -8,7 +8,7 @@
 
 //! Bump Allocator helper functions
 
-use crate::mm::bump::definition::BumpAllocator;
+use crate::mm::bump::BumpAllocator;
 
 impl BumpAllocator {
     /// # Helper function

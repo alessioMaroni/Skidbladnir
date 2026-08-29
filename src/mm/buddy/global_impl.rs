@@ -6,10 +6,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Contai the Global Implentation of the Buddy Allocator
+//! Contain the Global Implentation of the Buddy Allocator
 
-use crate::mm::buddy::definitions::LockedBuddyAllocator;
-use crate::mm::buddy::definitions::{BuddyAllocator, PAGE_SIZE};
+use crate::mm::buddy::LockedBuddyAllocator;
+use crate::mm::buddy::{BuddyAllocator, PAGE_SIZE};
 
 use core::alloc::{GlobalAlloc, Layout};
 use core::ptr::null_mut;

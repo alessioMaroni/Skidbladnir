@@ -8,7 +8,7 @@
 
 //! Global Implementation of the Bump Allocator
 
-use crate::mm::bump::definition::BumpAllocator;
+use crate::mm::bump::BumpAllocator;
 use core::alloc::{GlobalAlloc, Layout};
 
 unsafe impl GlobalAlloc for BumpAllocator {

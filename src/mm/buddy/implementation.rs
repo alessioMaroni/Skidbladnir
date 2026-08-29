@@ -18,7 +18,7 @@
 //! - **Deallocation (`dealloc`):** Calculates the buddy address using an XOR operation on the offset and,
 //!   if the buddy is free, recursively merges (*coalesces*) the two blocks into a higher-order block.
 
-use crate::mm::buddy::definitions::{BuddyAllocator, FreeNode, MAX_ORDER, PAGE_SIZE};
+use crate::mm::buddy::{BuddyAllocator, FreeNode, MAX_ORDER, PAGE_SIZE};
 
 use core::ptr::null_mut;
 

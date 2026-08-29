@@ -8,6 +8,10 @@
 
 //! This file contain the Bump Allocator Struct Definitions
 
+pub mod global_impl;
+pub mod helpers;
+pub mod implementation;
+
 use core::cell::UnsafeCell;
 
 /// Bump Allocator Struct Definition

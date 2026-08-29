@@ -9,6 +9,10 @@
 //! Bare Metal Buddy Allocator
 //! Struct and constant values definition
 
+pub mod implementation;
+pub mod loked_buddy_impl;
+pub mod global_impl;
+
 /// Maximum number of orders (levels) managed by the allocator ($0 \dots \text{MAX\_ORDER}-1$).
 ///
 /// With `MAX_ORDER = 11`, the maximum order is 10, corresponding to $2^{10} = 1024$ pages ($4\text{ MiB}$).
