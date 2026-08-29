@@ -175,7 +175,6 @@ fn efi_main() -> uefi::Status {
 }
 
 pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
-
 	ALLOCATOR.init(_boot_info);
 
 	let font_manager = Fonts::init(true, _boot_info.fb);
