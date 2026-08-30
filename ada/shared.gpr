@@ -2,10 +2,14 @@ abstract project Shared is
    for Languages use ("Ada");
 
    package Compiler is
-      for Default_Switches ("Ada") use (
+      for Switches ("Ada") use (
          "-O2",
-         "-gnatp",
-         "-mno-red-zone"
+         "-fno-strict-aliasing",
+         "-fno-PIC",
+         "-fno-pie",
+         "-mno-red-zone",
+         "-nostdlib",
+         "-ffreestanding"
       );
    end Compiler;
 end Shared;

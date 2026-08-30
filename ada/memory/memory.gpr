@@ -1,10 +1,10 @@
-project Time extends "../shared.gpr" is
+project memory extends "../shared.gpr" is
    for Languages use ("Ada");
    for Source_Dirs use ("src");
    for Object_Dir use "obj";
    for Library_Dir use "lib";
-   for Library_Name use "ada_time";
+   for Library_Name use "ada_memory";
    for Library_Kind use "static";
 
    package Compiler renames Shared.Compiler;
-end Time;
+end Memory;

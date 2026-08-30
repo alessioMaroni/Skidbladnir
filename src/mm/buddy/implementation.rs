@@ -19,6 +19,7 @@
 //!   if the buddy is free, recursively merges (*coalesces*) the two blocks into a higher-order block.
 
 use crate::mm::buddy::{BuddyAllocator, FreeNode, MAX_ORDER, PAGE_SIZE};
+use crate::mm::buddy::ada_compute_buddy_address;
 
 use core::ptr::null_mut;
 
@@ -94,36 +95,35 @@ impl BuddyAllocator {
 	/// # Safety
 	/// - `ptr` must point to a block allocated by this allocator.
 	/// - `order` must match the exact order used during allocation.
-	pub unsafe fn dealloc(&mut self, ptr: *mut u8, mut order: usize) {
-		let mut current_addr = ptr as usize;
-		let base = self.base_addr as usize;
+	pub unsafe fn dealloc(&mut self, ptr: *mut u8, order: usize) {
+        let mut current_ptr = ptr;
+        let mut order_u64 = order as u64;
 
-		// Calculate buddy address and attempt merging with higher orders
-		while order < MAX_ORDER - 1 {
-			let block_offset = current_addr - base;
-			let buddy_offset = block_offset ^ ((1 << order) * PAGE_SIZE);
-			let buddy_addr: usize = base + buddy_offset;
+        // Delegates buddy calculation and recursive coalescing to Ada
+        unsafe {
+            ada_compute_buddy_address(
+                self as *mut Self,
+                &mut current_ptr,
+                self.base_addr,
+                &mut order_u64,
+                PAGE_SIZE as u64,
+            );
+        }
 
-			if self.remove_from_freelist(order, buddy_addr as *mut FreeNode) {
-				// Buddy found and removed from free_list: merge into the block with the lower address
-				current_addr = core::cmp::min(current_addr, buddy_addr);
-				order += 1;
-			} else {
-				break;
-			}
-		}
+        let final_order = order_u64 as usize;
 
-		// Insert the (possibly coalesced) block into the free_list of the reached order
-		let node = current_addr as *mut FreeNode;
-		unsafe {
-			(*node).next = self.free_lists[order];
-		}
-		self.free_lists[order] = node;
-	}
+        // Insert the (possibly coalesced) block into the free_list of the reached order
+        let node = current_ptr as *mut FreeNode;
+        unsafe {
+            (*node).next = self.free_lists[final_order];
+        }
+        self.free_lists[final_order] = node;
+    }
 
-	/// Removes a specific target node from the free list of the specified order.
-	///
-	/// Used during deallocation to extract the buddy prior to merging.
+	// Removes a specific target node from the free list of the specified order.
+	//
+	// Used during deallocation to extract the buddy prior to merging.
+	/*
 	fn remove_from_freelist(&mut self, order: usize, target: *mut FreeNode) -> bool {
 		let mut curr = &mut self.free_lists[order];
 		while !curr.is_null() {
@@ -139,4 +139,5 @@ impl BuddyAllocator {
 		}
 		false
 	}
+	*/
 }

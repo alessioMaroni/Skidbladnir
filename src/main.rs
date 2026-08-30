@@ -6,6 +6,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+// TODO: Document adll the ada directory
+
 #![no_std]
 #![no_main]
 #![allow(unused_features)]

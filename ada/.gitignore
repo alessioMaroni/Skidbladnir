@@ -1,4 +1,14 @@
+# Time library
+/time
+/obj
+
 /time/obj/
 /time/lib/
 /time/alire/
 /time/config/
+
+# Memory library
+/memory/obj/
+/memory/lib/
+/memory/alire/
+/memory/config/

@@ -13,6 +13,17 @@ pub mod global_impl;
 pub mod implementation;
 pub mod loked_buddy_impl;
 
+#[cfg(target_arch = "x86_64")]
+unsafe extern "sysv64" {
+    pub fn ada_compute_buddy_address(
+        allocator: *mut BuddyAllocator,
+        current_address: *mut *mut u8,
+        base_address: u64,
+        order: *mut u64,
+        page_size: u64,
+    );
+}
+
 /// Maximum number of orders (levels) managed by the allocator ($0 \dots \text{MAX\_ORDER}-1$).
 ///
 /// With `MAX_ORDER = 11`, the maximum order is 10, corresponding to $2^{10} = 1024$ pages ($4\text{ MiB}$).
@@ -31,6 +42,7 @@ pub struct FreeNode {
 }
 
 /// Main Buddy Allocator structure (non thread-safe).
+#[repr(C)]
 pub struct BuddyAllocator {
 	/// Array of linked lists of free blocks for each order.
 	pub free_lists: [*mut FreeNode; MAX_ORDER],

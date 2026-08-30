@@ -1,0 +1,97 @@
+V "GNAT Lib v16"
+A -O2
+A -gnatA
+A -fno-strict-aliasing
+A -fno-unwind-tables
+A -fno-asynchronous-unwind-tables
+A -mtune=generic
+A -march=x86-64
+A -mtls-dialect=gnu2
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_IMPLICIT_LOOPS
+
+U memory%b		memory.adb		ccfb31fc NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+
+U memory%s		memory.ads		6c41189e EE NE OO PK
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+
+D ada.ads		20260819000000 76789da1 ada%s
+D a-unccon.ads		20260819000000 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20260819000000 9111f9c1 interfaces%s
+D i-c.ads		20260819000000 dbdd3be7 interfaces.c%s
+D memory.ads		20260830122255 268ddab8 memory%s
+D memory.adb		20260830122204 ae210e0d memory%b
+D system.ads		20260819000000 e2b7c99d system%s
+D s-exctab.ads		20260819000000 91bef6ef system.exception_table%s
+D s-parame.ads		20260819000000 a1aeab5c system.parameters%s
+D s-stalib.ads		20260819000000 1c9580f6 system.standard_library%s
+G a e
+G c Z s b [remove_from_freelist memory 34 13 none]
+G c Z s b [compute_buddy_address memory 40 14 none]
+G c Z s s [free_nodeIP memory 17 9 none]
+G c Z s s [Tfree_lists_arrayBIP memory 22 4 none]
+G c Z s s [buddy_allocatorIP memory 25 9 none]
+X 1 ada.ads
+18K9*Ada 22e8 6|3r6 47r30 48r33 49r35
+X 2 a-unccon.ads
+23v14*Unchecked_Conversion 6|3w10 47r34 48r37 49r39
+X 3 interfac.ads
+47K9*Interfaces 247e15 5|1w6 2r6 9r30 27r20 36r16 37r38 43r32 44r32 45r32
+. 6|1w6 1r22 2r6 2r24 9r16 10r38 43r32 44r32 45r32 47r64 48r59 49r61 51r23
+. 52r23 53r23 54r23 56r21 62r30
+81M9*Unsigned_8 5|9r41
+95M9*Unsigned_64 5|27r31 36r27 43r43 44r43 45r43 6|9r27 43r43 44r43 45r43
+. 47r75 48r70 49r72 51r34 52r34 53r34 54r34 56r32 62r41
+179V13*Shift_Left{95M9} 6|58s44
+X 4 i-c.ads
+33K20*C 605e17 5|2w17 37r49 6|2w17 2r35 10r49
+62I9*int<integer> 5|37r51 6|10r51
+X 5 memory.ads
+4K9*Memory 50l5 50e11 6|5b14 72l5 72t11
+6N4*Max_Order 22r41 6|56r45
+7N4*Page_Size
+9P9*U8_Ptr(3|81M9) 10r26 11r31 42r32 6|42r32 47r56 48r83
+13R9*Free_Node 14r37 17c9 19e14 20r26
+14P9*Free_Node_Ptr(13R9) 15r26 18r14 22r59 37r16 6|10r16 13r14 14r14 49r85
+18p7*Next{14P9} 6|25r46 27m21 27r34 34r23
+22A9*Free_Lists_Array(14P9)<integer> 23r26 26r20
+25R9*Buddy_Allocator 28e14 29r26 31r43
+26a7*Free_Lists{22A9} 6|20r20 25m21
+27m7*Base_Addr{3|95M9}
+31P9*Buddy_Allocator_Ptr(25R9) 32r26 35r16 41r25 6|8r16 41r25
+34V13*Remove_From_Freelist{4|62I9} 35>7 36>7 37>7 38r26 6|7b13 38l8 38t28
+. 61s13
+35p7 Self{31P9} 6|8b7 16r10 20r15 25r16
+36m7 Order{3|95M9} 6|9b7 12r43
+37p7 Target{14P9} 6|10b7 23r20
+40U14*Compute_Buddy_Address 41>7 42=7 43>7 44=7 45>7 47i<c,ada_compute_buddy_address>36
+. 6|40b14 70l8 70t29
+41p7 Self{31P9} 6|41b7 61r35
+42p7 Current_Address{9P9} 6|42b7 51r57 69m7
+43m7 Base_Address{3|95M9} 6|43b7 57r42 59r26
+44m7 Order{3|95M9} 6|44b7 56r13 58r68 61r41 63m13 63r30
+45m7 Page_Size{3|95M9} 6|45b7 58r78
+X 6 memory.adb
+12i7 Idx{integer} 20r32 25r33
+13p7 Curr{5|14P9} 20m7 22r13 23r13 25r41 27r29 33r18 34m10 34r18
+14p7 Prev{5|14P9} 24r16 27r16 33m10
+47V16 To_U64[2|23]{3|95M9} 51s49
+48V16 To_U8_Ptr[2|23]{5|9P9} 69s26
+49V16 To_Node_Ptr[2|23]{5|14P9} 61s48
+51m7 Curr_Addr_Val{3|95M9} 57r26 62m13 62r58 69r37
+52m7 Block_Offset{3|95M9} 57m10 58r26
+53m7 Buddy_Offset{3|95M9} 58m10 59r41
+54m7 Buddy_Addr{3|95M9} 59m10 61r61 62r73
+
