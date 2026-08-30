@@ -41,7 +41,7 @@ Yggdrasil combines the memory safety and modern abstractions of **Rust** with th
 
 ```
  +-----------------------------------------------------------------+
- |                     YGGDRASIL KERNEL CORE                       |
+ |                     Yggdrasil KERNEL CORE                       |
  +-----------------------------------------------------------------+
  |         RUST SUBSYSTEMS         |       ADA/SPARK SUBSYSTEMS    |
  |  - Platform Initialization      |  - Cryptographic Proofs       |

@@ -1,0 +1,11 @@
+abstract project Shared is
+   for Languages use ("Ada");
+
+   package Compiler is
+      for Default_Switches ("Ada") use (
+         "-O2",
+         "-gnatp",
+         "-mno-red-zone"
+      );
+   end Compiler;
+end Shared;

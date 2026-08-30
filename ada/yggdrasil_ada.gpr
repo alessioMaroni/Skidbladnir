@@ -1,0 +1,5 @@
+aggregate project Yggdrasil_Ada is
+   for Project_Files use (
+      "time/time.gpr"
+   );
+end Yggdrasil_Ada;
