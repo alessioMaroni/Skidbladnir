@@ -5,10 +5,12 @@ TARGET_UEFI := x86_64-unknown-uefi
 
 build-ada:
 	gprbuild -P ada/yggdrasil_ada.gpr -XADA_BUILD_MODE=release
+	objcopy -O pe-x86-64 ada/time/obj/time.o ada/time/obj/time_coff.o
+	rm -f ada/time/lib/libada_time.a
+	ar rcs ada/time/lib/libada_time.a ada/time/obj/time_coff.o
 
 build-x86_64: build-ada
 	RUSTFLAGS="-L native=$(CURDIR)/ada/time/lib -l static=ada_time" \
-	    cargo +nightly build --package Yggdrasil-kernel --target $(TARGET_UEFI)
 	    cargo +nightly build --package Yggdrasil-kernel --target $(TARGET_UEFI)
 	rm -rf target/esp
 	mkdir -p target/esp/EFI/BOOT

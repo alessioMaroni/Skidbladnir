@@ -156,6 +156,8 @@ extern crate alloc;
 use alloc::string::String;
 #[allow(unused_imports)]
 use alloc::vec::Vec;
+#[allow(unused_imports)]
+use alloc::string::ToString;
 
 use crate::io::output::Console;
 use crate::io::output::fonts::Fonts;
@@ -184,9 +186,17 @@ pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
 	*crate::io::output::WRITER.lock() = Some(console);
 
 	let mut my_vec: Vec<String> = Vec::new();
-	my_vec.push(String::from("Hello from Vector"));
+    my_vec.push(String::from("Hello from Vector"));
+    my_vec.push(String::from("Hello from Vector"));
 
-	println!("{:?}", my_vec);
+    let result = unsafe { ada_sum_integer(2, 8) };
 
-	loop {}
+	if result == 10 {
+		println!("Ada result ten")
+	}
+
+    println!("{:?}", my_vec);
+
+    loop {}
 }
+
