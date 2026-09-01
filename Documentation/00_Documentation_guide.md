@@ -9,3 +9,6 @@
 ## I/O
 ### Output
 * [**01**] [Fonts](./01_io_fonts.md) 'Fonts **gestion and declaration.**'
+
+## Ada
+* [**01**] [Memory](./ada/memory.md) 'Usage of **ada inside the Buddy Allocator**'

@@ -2,13 +2,17 @@
 
 * [**Buddy Allocator**](./../src/mm/buddy)
 
-Yggdrasil uses the buddy allocator as the sole `#[global_allocator]` for the kernel. There is currently no overlying layer for small allocations.
+Yggdrasil uses the buddy allocator as the sole `#[global_allocator]` for the kernel. There is currently no secondary allocator.
 
 ## Why It Works For Now
-* **Minimum page size (4096 bytes)**: This works well as long as the kernel primarily allocates large structures (such as `Vec` and I/O buffers).
+* **Minimum page size (4096 bytes)**: This works well as long as the kernel primarily allocates large structures.
 
 ## The Limit: Internal Fragmentation on Small Objects
-If the kernel were to allocate many 32–64 byte objects (e.g., thousands of small structs per process), each would still consume an entire page (4096 bytes)—wasting over 98% of the space per object. This is why real-world kernels (like Linux) place a **slab allocator** on top of the buddy allocator: the buddy manages whole pages, whereas the slab allocator subdivides a page into many small objects of uniform size or type.
+If the kernel were to allocate many 32–64 byte objects (e.g., thousands of small structs per process), each allocation would occupy a full page, resulting in severe internal fragmentation.
+
+## Usage of the Ada/SPARK Language
+Integrating Ada into the memory allocator aims to improve security and guarantee deterministic behavior. This approach leverages the strong memory safety guarantees of Ada alongside the formal mathematical verifiability provided by SPARK.
 
 ## Next Steps (Planned)
-* Implement a slab allocator layered on top of the existing buddy allocator for when the kernel begins allocating numerous small structures (e.g., Process Control Blocks).
+* Implement a slab allocator layered on top of the existing buddy allocator for when the kernel begins allocating smaller objects.
+* Implement SPARK verification for deterministic memory allocation.
