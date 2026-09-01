@@ -1,14 +1,14 @@
-# The Yggdrasil Kernel Project
+# The ToPluto Kernel Project
 
-> **Yggdrasil** is an ultra-resilient, bare-metal microkernel written in **Rust** with formal mathematical verification via **Ada/SPARK**. Built to withstand grid-down scenarios, severe physical degradation, and hostile operational environments, Yggdrasil links autonomous devices into self-healing, encrypted mesh networks across air, land, sea, and space.
+> **ToPluto** is an ultra-resilient, bare-metal microkernel written in **Rust** with formal mathematical verification via **Ada/SPARK**. Built to withstand grid-down scenarios, severe physical degradation, and hostile operational environments, ToPluto links autonomous devices into self-healing, encrypted mesh networks across air, land, sea, and space.
 
 ---
 
-## Overview: What is Yggdrasil?
+## Overview: What is ToPluto?
 
-In Norse mythology, **Yggdrasil** is the colossal World Tree that connects and sustains all realms of existence through its branches and roots. 
+In Norse mythology, **ToPluto** is the colossal World Tree that connects and sustains all realms of existence through its branches and roots. 
 
-The **Yggdrasil Kernel** embodies this exact philosophy: acting as an unbreakable, decentralized core that binds isolated hardware nodes into a resilient, self-healing network. Engineered from the ground up for bare-metal execution without external dependencies, Yggdrasil guarantees zero-runtime-exception safety and deterministic execution under extreme stress.
+The **ToPluto Kernel** embodies this exact philosophy: acting as an unbreakable, decentralized core that binds isolated hardware nodes into a resilient, self-healing network. Engineered from the ground up for bare-metal execution without external dependencies, ToPluto guarantees zero-runtime-exception safety and deterministic execution under extreme stress.
 
 ### Deployment Scenarios
 
@@ -37,11 +37,11 @@ The **Yggdrasil Kernel** embodies this exact philosophy: acting as an unbreakabl
 
 ## Hybrid Polyglot Architecture
 
-Yggdrasil combines the memory safety and modern abstractions of **Rust** with the rigorous formal mathematical proofs of **Ada/SPARK**.
+ToPluto combines the memory safety and modern abstractions of **Rust** with the rigorous formal mathematical proofs of **Ada/SPARK**.
 
 ```
  +-----------------------------------------------------------------+
- |                     Yggdrasil KERNEL CORE                       |
+ |                     ToPluto KERNEL CORE                       |
  +-----------------------------------------------------------------+
  |         RUST SUBSYSTEMS         |       ADA/SPARK SUBSYSTEMS    |
  |  - Platform Initialization      |  - Cryptographic Proofs       |
@@ -87,8 +87,8 @@ Ada and SPARK manage high-assurance arithmetic, precise timing constraints, and 
 
 ```bash
 # Clone the repository
-git clone https://github.com/alessioMaroni/Yggdrasil
-cd Yggdrasil
+git clone https://github.com/alessioMaroni/ToPluto
+cd ToPluto
 
 # Verify SPARK subsystems
 make verify-spark

@@ -2,7 +2,7 @@
 
 * [**Buddy Allocator**](./../src/mm/buddy)
 
-Yggdrasil uses the buddy allocator as the sole `#[global_allocator]` for the kernel. There is currently no secondary allocator.
+ToPluto uses the buddy allocator as the sole `#[global_allocator]` for the kernel. There is currently no secondary allocator.
 
 ## Why It Works For Now
 * **Minimum page size (4096 bytes)**: This works well as long as the kernel primarily allocates large structures.

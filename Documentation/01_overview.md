@@ -1,7 +1,7 @@
-# The Yggdrasil Kernel Projec
-## What is Yggdrasil?
+# The ToPluto Kernel Projec
+## What is ToPluto?
 
-**Yggdrasil** is an ultra-resilient, bare-metal kernel written in **Rust** with **Ada/SPARK** integration. It is engineered for total operational adaptability across any deployment scenario:
+**ToPluto** is an ultra-resilient, bare-metal kernel written in **Rust** with **Ada/SPARK** integration. It is engineered for total operational adaptability across any deployment scenario:
 
 * **Defense & Tactical:** High-reliability execution under degraded or hostile conditions.
 * **Extreme Environments:** Embedded operations in maritime, aerial, and space systems.

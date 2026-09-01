@@ -1,5 +1,5 @@
 name = "time"
-description = "a high precision timer library for the Yggdrasil kernel"
+description = "a high precision timer library for the ToPluto kernel"
 version = "0.1.0-dev"
 
 authors = ["Alessio Maroni"]

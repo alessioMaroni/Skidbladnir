@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Yggdrasil Kernel Project
+// Copyright (c) 2026 ToPluto Kernel Project
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -8,7 +8,7 @@
 
 //! This file olds the principals init function to setup the x86_64 envirorment
 
-/// Initializes the x86_64 environment for the Yggdrasil Kernel.
+/// Initializes the x86_64 environment for the ToPluto Kernel.
 ///
 /// This function performs low-level hardware setup using inline assembly.
 /// Specifically, it interacts with I/O port addresses to configure the serial port (UART)
