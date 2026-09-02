@@ -10,7 +10,8 @@
 //!
 //! This module manages font selection, typography configuration, and low-level character
 //! rendering for the ToPluto kernel's output subsystem. It provides robust abstractions
-//! to switch between different font rendering engines (such as bitmap matrices and future vector outlines)
+//! to switch between different font rendering engines
+//! (such as bitmap matrices and future vector outlines)
 //! and draws characters directly onto the target framebuffer.
 //!
 //! ## Example Usage
@@ -155,11 +156,13 @@ impl Fonts {
 				for col_idx in 0..8 {
 					// Check if the pixel bit is set (non-zero)
 					if (row_byte & (1 << (7 - col_idx))) != 0 {
-						// Calculate absolute screen coordinates, safely casting usize to u32
+						// Calculate absolute screen coordinates,
+						// safely casting usize to u32
 						let x = (start_x + col_idx) as u32;
 						let y = (start_y + row_idx) as u32;
 
-						// Draw the individual pixel onto the framebuffer hardware/buffer
+						// Draw the individual pixel
+						// onto the framebuffer hardware/buffer
 						self.fb.set_pixel(x, y, color);
 					}
 				}

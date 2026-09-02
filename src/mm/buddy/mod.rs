@@ -27,7 +27,8 @@ unsafe extern "sysv64" {
 
 /// Maximum number of orders (levels) managed by the allocator ($0 \dots \text{MAX\_ORDER}-1$).
 ///
-/// With `MAX_ORDER = 11`, the maximum order is 10, corresponding to $2^{10} = 1024$ pages ($4\text{ MiB}$).
+/// With `MAX_ORDER = 11`,
+/// the maximum order is 10, corresponding to $2^{10} = 1024$ pages ($4\text{ MiB}$).
 pub const MAX_ORDER: usize = 11;
 
 /// Standard memory page size on x86_64 architecture ($4096\text{ bytes}$).

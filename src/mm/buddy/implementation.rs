@@ -12,11 +12,14 @@
 //! in the *ToPluto* kernel.
 //!
 //! ## Algorithm
-//! The allocator divides memory into blocks with sizes equal to powers of two ($2^k \times \text{PAGE\_SIZE}$).
-//! - **Allocation (`alloc`):** Searches for an available block of the requested order. If none is available,
-//!   it recursively splits a higher-order block in half into two "buddies".
-//! - **Deallocation (`dealloc`):** Calculates the buddy address using an XOR operation on the offset and,
-//!   if the buddy is free, recursively merges (*coalesces*) the two blocks into a higher-order block.
+//! The allocator divides memory into blocks with sizes equal to powers of two
+//!     ($2^k \times \text{PAGE\_SIZE}$).
+//! - **Allocation (`alloc`):** Searches for an available block of the requested order.
+//!     If none is available,
+//!     it recursively splits a higher-order block in half into two "buddies".
+//! - **Deallocation (`dealloc`):**
+//!      Calculates the buddy address using an XOR operation on the offset and,
+//!      if the buddy is free, recursively merges the two blocks into a higher-order block.
 
 use crate::mm::buddy::{BuddyAllocator, FreeNode, MAX_ORDER, PAGE_SIZE};
 use crate::mm::buddy::ada_compute_buddy_address;

@@ -17,7 +17,8 @@
 ///
 /// # Safety
 /// This function is marked `unsafe` because it executes raw inline assembly
-/// (`core::arch::asm!`), directly reading and writing to hardware I/O ports (`0x3F8`, `0x3F9`, `0x3FB`).
+/// (`core::arch::asm!`), directly reading and writing to hardware I/O ports
+///  (`0x3F8`, `0x3F9`, `0x3FB`).
 /// Improper port manipulation can cause undefined behavior or hardware instability.
 pub fn init_x86_64() {
 	unsafe {
