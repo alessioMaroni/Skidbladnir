@@ -13,8 +13,18 @@ pub mod global_impl;
 pub mod implementation;
 pub mod loked_buddy_impl;
 
-/// Call to the extern function that calculates the address for the deallocating function
-/// in the buddy allocator.
+// // Call to the extern function that search free for allocating function
+// in the buddy allocator.
+#[cfg(target_arch = "x86_64")]
+unsafe extern "sysv64" {
+    pub fn ada_search_free_block(
+        allocator: *mut BuddyAllocator,
+        order: u64,
+    ) -> *mut u8;
+}
+
+// Call to the extern function that calculates the address for the deallocating function
+// in the buddy allocator.
 #[cfg(target_arch = "x86_64")]
 unsafe extern "sysv64" {
     pub fn ada_compute_buddy_address(

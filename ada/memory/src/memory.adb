@@ -11,8 +11,11 @@
 -- Provides the execution logic for managing free block lists, removing nodes,
 -- and computing buddy addresses during recursive memory coalescing.
 
+with System;
 with Interfaces; use Interfaces;
 with Interfaces.C; use Interfaces.C;
+with Ada.Unchecked_Conversion;
+with System.Storage_Elements;
 with Ada.Unchecked_Conversion;
 
 package body Memory is
@@ -66,6 +69,61 @@ package body Memory is
 
         return 0; -- Node not found in the freelist
     end Remove_From_Freelist;
+
+    -- Search_Free_Block
+    --
+    -- Search_Free_Block: Searches for a free memory block matching the requested order.
+    --
+    -- Splits larger blocks (buddy splitting) and populates intermediate free lists.
+    --
+    -- Parameters: Self (allocator pointer), Order (allocation scale).
+    --
+    -- Return: Memory block address, or Null_Address if out of memory or invalid.
+    --
+    -- FFI: Exported with C ABI, mapping seamlessly to Rust's Option<*mut u8>.
+    function Search_Free_Block
+      (Self  : Buddy_Allocator_Ptr;
+       Order : Interfaces.Unsigned_64) return System.Address 
+    is
+       -- Unchecked conversions for safe pointer arithmetic
+       function To_U64 is new Ada.Unchecked_Conversion (Free_Node_Ptr, Interfaces.Unsigned_64);
+       function To_Node_Ptr is new Ada.Unchecked_Conversion (Interfaces.Unsigned_64, Free_Node_Ptr);
+       function To_Address is new Ada.Unchecked_Conversion (Free_Node_Ptr, System.Address);
+
+       Block         : Free_Node_Ptr := null;
+       Buddy         : Free_Node_Ptr := null;
+       Size          : Interfaces.Unsigned_64;
+       Current_Order : Integer;
+    begin
+       if Order >= Interfaces.Unsigned_64 (Max_Order) then
+          return System.Null_Address;
+       end if;
+
+       -- Max_Order is 11, so the array goes up to 10
+       for I in Integer (Order) .. Max_Order - 1 loop
+          Current_Order := I;
+
+          if Self.Free_Lists (Current_Order) /= null then
+             -- Fetch the first available block from the current order
+             Block := Self.Free_Lists (Current_Order);
+             Self.Free_Lists (Current_Order) := Block.Next;
+
+             -- Recursively split down to the requested order
+             Size := Shift_Left (Interfaces.Unsigned_64 (1), Current_Order) * Interfaces.Unsigned_64 (Page_Size);
+
+             for J in reverse Integer (Order) .. (Current_Order - 1) loop
+                Size  := Size / 2;
+                Buddy := To_Node_Ptr (To_U64 (Block) + Size);
+                Buddy.Next := Self.Free_Lists (J);
+                Self.Free_Lists (J) := Buddy;
+             end loop;
+
+             return To_Address (Block);
+          end if;
+       end loop;
+
+       return System.Null_Address;
+    end Search_Free_Block;
 
     -- Compute_Buddy_Address
 	--

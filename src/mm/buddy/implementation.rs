@@ -22,7 +22,7 @@
 //!      if the buddy is free, recursively merges the two blocks into a higher-order block.
 
 use crate::mm::buddy::{BuddyAllocator, FreeNode, MAX_ORDER, PAGE_SIZE};
-use crate::mm::buddy::ada_compute_buddy_address;
+use crate::mm::buddy::{ada_compute_buddy_address, ada_search_free_block};
 
 use core::ptr::null_mut;
 
@@ -63,35 +63,19 @@ impl BuddyAllocator {
 	/// # Returns
 	/// Returns a `*mut u8` pointer to the allocated block, or `None` if memory is insufficient.
 	pub fn alloc(&mut self, order: usize) -> Option<*mut u8> {
-		if order >= MAX_ORDER {
-			return None;
-		}
+        let order_u64 = order as u64;
 
-		for current_order in order..MAX_ORDER {
-			if !self.free_lists[current_order].is_null() {
-				// Fetch the first available block from the current order
-				let block = self.free_lists[current_order];
-				unsafe {
-					self.free_lists[current_order] = (*block).next;
-				}
+        // Call the Ada backend to find and split a free block
+        let ptr = unsafe {
+            ada_search_free_block(self as *mut Self, order_u64)
+        };
 
-				// Recursively split down to the requested order
-				let mut size = (1 << current_order) * PAGE_SIZE;
-				for j in (order..current_order).rev() {
-					size /= 2;
-					let buddy = (block as usize + size) as *mut FreeNode;
-					unsafe {
-						(*buddy).next = self.free_lists[j];
-						self.free_lists[j] = buddy;
-					}
-				}
-
-				return Some(block as *mut u8);
-			}
-		}
-
-		None
-	}
+        if ptr.is_null() {
+            None
+        } else {
+            Some(ptr)
+        }
+    }
 
 	/// Frees a previously allocated block and attempts recursive merging (coalescing).
 	///
