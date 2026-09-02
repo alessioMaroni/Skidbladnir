@@ -88,9 +88,12 @@ package body Memory is
          Page_Size       : in     Interfaces.Unsigned_64)
     is
         -- Unchecked conversions between raw integer addresses and access pointers
-        function To_U64 is new Ada.Unchecked_Conversion (U8_Ptr, Interfaces.Unsigned_64);
-        function To_U8_Ptr is new Ada.Unchecked_Conversion (Interfaces.Unsigned_64, U8_Ptr);
-        function To_Node_Ptr is new Ada.Unchecked_Conversion (Interfaces.Unsigned_64, Free_Node_Ptr);
+        function To_U64 is new Ada.Unchecked_Conversion
+		 (U8_Ptr, Interfaces.Unsigned_64);
+        function To_U8_Ptr is new Ada.Unchecked_Conversion
+		 (Interfaces.Unsigned_64, U8_Ptr);
+        function To_Node_Ptr is new Ada.Unchecked_Conversion
+		 (Interfaces.Unsigned_64, Free_Node_Ptr);
 
         Curr_Addr_Val : Interfaces.Unsigned_64 := To_U64 (Current_Address);
         Block_Offset  : Interfaces.Unsigned_64;

@@ -41,7 +41,8 @@ impl Console {
 	///
 	/// # Returns
 	///
-	/// Returns a fully configured [`Console`] struct set with default initial coordinates (`x: 20`, `y: 20`).
+	/// Returns a fully configured [`Console`] struct
+	/// set with default initial coordinates (`x: 20`, `y: 20`).
 	///
 	/// # Example
 	///
@@ -62,7 +63,8 @@ impl Console {
 		}
 	}
 
-	/// Renders a single ASCII byte onto the console screen and advances the horizontal cursor position.
+	/// Renders a single ASCII byte onto the console screen
+	/// and advances the horizontal cursor position.
 	///
 	/// This method draws the character using the active font layout at the current
 	/// `pos_x` and `pos_y` coordinates, automatically calculating the appropriate glyph spacing
@@ -85,8 +87,11 @@ impl Console {
 
 		// Determine the horizontal spacing advance width based on the active font variant
 		let advance_width = match self.font.variant {
-			FontVariant::Bitmap(_) => 8, // Fixed 8-pixel width for standard bitmap fonts
-			                             // FontVariant::Vector(ref v) => v.get_glyph_width(byte), // Future vector font implementation
+			// Fixed 8-pixel width for standard bitmap fonts
+			FontVariant::Bitmap(_) => 8, 
+			// Future vector font implementation,
+			// uncomment once implemented.
+			// FontVariant::Vector(ref v) => v.get_glyph_width(byte),
 		};
 
 		// Advance the cursor position horizontally
