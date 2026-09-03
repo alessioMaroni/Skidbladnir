@@ -49,7 +49,7 @@ unsafe extern "sysv64" {
 /// - `new_rsp` must point to a valid stack frame configured with a matching `TaskContext` structure.
 /// - Improper stack alignment (must remain 16-byte aligned before `call` boundaries) or corrupted
 ///   pointers will lead to a kernel panic or CPU triple fault.
-pub fn switch_context(old_rsp: *mut u64, new_rsp: *const u64) {
+pub unsafe fn switch_context(old_rsp: *mut u64, new_rsp: *const u64) {
     unsafe {
         __switch(old_rsp, new_rsp);
     }
