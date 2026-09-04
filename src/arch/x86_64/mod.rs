@@ -6,28 +6,5 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//!
-
-use alloc::vec::Vec;
-use core::arch:asm;
-
-const DEFAULT_STACK_SIZE: usize = 64 * 1024; // 64 KB
-
-#[repr(C)]
-pub struct TaskContext {
-    pub rsp: u64,
-}
-
-pub enum TaskState {
-    Ready,
-    Running,
-    Stopped,
-    Dead,
-}
-
-pub struct Task {
-    pub id: u64,
-    pub context: TaskContext,
-    pub stack: Vec<u8>,
-    pub state: TaskState,
-}
+pub mod init;
+pub mod task;
