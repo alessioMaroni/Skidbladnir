@@ -17,6 +17,7 @@
 
 pub mod fonts;
 pub mod print;
+pub mod helpers;
 
 use crate::io::output::fonts::Fonts;
 
@@ -28,6 +29,9 @@ use spin::Mutex;
 pub struct Console {
 	/// Fonts struct to output
 	pub font: Fonts,
+
+    /// Background color (unsigned 32-bit)
+    pub background: u32,
 
 	/// Tracks the absolute line number or total tracked lines in the console view.
 	pub line_number: usize,

@@ -54,12 +54,13 @@ impl Console {
 	/// // let font = Fonts::init(true, fb);
 	/// // let console = Console::init(actual_font, font);
 	/// ```
-	pub fn init(font: Fonts) -> Self {
+	pub fn init(font: Fonts, background: u32) -> Self {
 		Console {
 			pos_x: 20,
 			pos_y: 20,
 			line_number: 0,
 			font,
+            background
 		}
 	}
 

@@ -11,7 +11,7 @@
 //!
 //! # Module
 //! ```rust
-//! use crate::drivers::video::set_pixel::*;
+//! use crate::drivers::video::single_pixel::*;
 //! ```
 
 use crate::FrameBuffer;

@@ -51,7 +51,7 @@ pub struct ActualFont {
 pub enum FontVariant {
 	/// Standard bitmap-based font alphabet containing an 8x8 pixel grid layout
 	/// for up to 26 uppercase/lowercase alphanumeric characters.
-	Bitmap([[u8; 8]; 26]),
+	Bitmap([[u8; 8]; 128]),
 }
 
 /// Manages active font state, typography options, and direct pixel rendering.
@@ -117,8 +117,7 @@ impl Fonts {
 	pub fn match_ascii_to_font(&self, byte: u8) -> Option<[u8; 8]> {
 		match &self.variant {
 			FontVariant::Bitmap(alphabet) => match byte {
-				b'A'..=b'Z' => Some(alphabet[(byte - b'A') as usize]),
-				b'a'..=b'z' => Some(alphabet[(byte - b'a') as usize]),
+				0..=127 => Some(alphabet[byte as usize]),
 				_ => None,
 			},
 		}

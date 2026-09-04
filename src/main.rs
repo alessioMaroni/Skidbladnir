@@ -183,19 +183,15 @@ pub fn kernel_main(_boot_info: &mut BootInfo) -> ! {
 
 	let font_manager = Fonts::init(true, _boot_info.fb);
 
-	let console = Console::init(font_manager);
+	let console = Console::init(font_manager, 0x0);
+
+	console.clear_console();
 
 	*crate::io::output::WRITER.lock() = Some(console);
 
 	let mut my_vec: Vec<String> = Vec::new();
     my_vec.push(String::from("Hello from Vector"));
     my_vec.push(String::from("Hello from Vector"));
-
-    let result = unsafe { ada_sum_integer(2, 8) };
-
-	if result == 10 {
-		println!("Ada result ten")
-	}
 
     println!("{:?}", my_vec);
 
