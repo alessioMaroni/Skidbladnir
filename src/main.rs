@@ -20,6 +20,8 @@ mod drivers;
 mod io;
 mod mm;
 mod panic;
+mod sync;
+mod task;
 
 use mm::ALLOCATOR;
 

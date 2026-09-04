@@ -22,7 +22,7 @@ pub mod helpers;
 use crate::io::output::fonts::Fonts;
 
 use core::fmt::{self, Write};
-use spin::Mutex;
+use crate::sync::mutex::Mutex;
 
 /// Represents the system output console, tracking active typography, current cursor position,
 /// and line tracking metrics.

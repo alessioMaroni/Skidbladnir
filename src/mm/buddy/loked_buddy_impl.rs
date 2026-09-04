@@ -9,11 +9,12 @@
 //! Loked Buddy Allocator Implementation
 
 use crate::mm::buddy::{BuddyAllocator, LockedBuddyAllocator};
+use crate::sync::mutex::Mutex;
 
 impl LockedBuddyAllocator {
 	/// Creates an uninitialized thread-safe allocator instance at compile time.
 	pub const fn new() -> Self {
-		Self(spin::Mutex::new(BuddyAllocator::new()))
+		Self(Mutex::new(BuddyAllocator::new()))
 	}
 
 	/// Initializes the protected allocator by acquiring the spinlock.

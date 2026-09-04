@@ -7,7 +7,7 @@
 // except according to those terms.
 
 //! ```rust
-//! use crate::sync::mutex;
+//! use crate::sync::mutex::Mutex;
 //! ```
 //! Custom Spinlock-based Mutex Implementation.
 //!
@@ -27,7 +27,7 @@ use core::sync::atomic::{AtomicBool, Ordering};
 /// # Examples
 ///
 /// ```rust
-/// use crate::sync::Mutex;
+/// use crate::sync::mutex::Mutex;
 
 /// static COUNTER: Mutex<u32> = Mutex::new(0);
 ///
@@ -66,7 +66,7 @@ impl<T> Mutex<T> {
     /// # Examples
     ///
     /// ```rust
-    /// use crate::sync::Mutex;
+    /// use crate::sync::mutex::Mutex;
     ///
     /// static DATA: Mutex<u32> = Mutex::new(100);
     /// let local_mutex = Mutex::new(42);

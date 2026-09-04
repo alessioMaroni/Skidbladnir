@@ -13,6 +13,8 @@ pub mod global_impl;
 pub mod implementation;
 pub mod loked_buddy_impl;
 
+use crate::sync::mutex::Mutex;
+
 // // Call to the extern function that search free for allocating function
 // in the buddy allocator.
 #[cfg(target_arch = "x86_64")]
@@ -64,4 +66,4 @@ pub struct BuddyAllocator {
 }
 
 /// Thread-safe wrapper for `BuddyAllocator` protected by a spinlock.
-pub struct LockedBuddyAllocator(pub spin::Mutex<BuddyAllocator>);
+pub struct LockedBuddyAllocator(pub Mutex<BuddyAllocator>);

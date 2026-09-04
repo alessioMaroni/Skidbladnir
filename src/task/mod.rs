@@ -9,7 +9,6 @@
 //!
 
 use alloc::vec::Vec;
-use core::arch:asm;
 
 const DEFAULT_STACK_SIZE: usize = 64 * 1024; // 64 KB
 
